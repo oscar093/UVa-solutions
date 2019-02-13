@@ -34,7 +34,6 @@ public class Main {
 				m.area[j] = ir.readLine().split("");
 			}
 			int result = m.mkGraph();
-//			System.out.println("\nResult: " + result + "\n\n");
 			m.edges.clear();
 		}
 	}
@@ -46,13 +45,11 @@ public class Main {
 			for (String s : sv) {
 				if (s.contentEquals("S") || s.contentEquals("A")) {
 					bfs(i,j);
-//					System.out.println("Ny");
 				}
 				j++;
 			}
 			i++;
 		}
-//		System.out.println(prim());
 		System.out.println(kruskal());
 		visitd.clear();
 		return 1;
@@ -87,7 +84,6 @@ public class Main {
 			int y = pos.y;
 			if (area[pos.x][pos.y].contentEquals("A") || area[pos.x][pos.y].contentEquals("S")) {
 				graph.add(pos);
-//				System.out.println("INlagd: " + area[x][y]);
 			}
 			if (whitinBound(x, y + 1)) {
 				Node n = new Node(x, y + 1, pos.w + 1);
@@ -109,10 +105,8 @@ public class Main {
 				queue.add(n);
 				visited[x - 1][y] = true;
 			}
-//			System.out.println();
 		}
 		for(int i = 0; i < graph.size(); i++) {
-//			System.out.println(area[graph.get(i).x][graph.get(i).y] + ": x: " + graph.get(i).x + ", y: " + graph.get(i).y + " w: " + graph.get(i).w);
 			if(graph.get(i).w > 0) {
 				Edge e = new Edge(start, graph.get(i), graph.get(i).w);
 				if(!edgeIsInEdges(e)) {
@@ -241,28 +235,6 @@ public class Main {
 			return false;
 	}
 	
-	public int prim() {
-		int result = 0;
-		MST = new ArrayList<Edge>();
-		edges.sort(null);
-		int i = 0;
-		for (Edge e : edges) {
-			if(addToMST(e)) {
-				result += e.w;
-			}			
-			System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-					+ ", y: " + e.node2.y + ")" + " w: " + e.w);
-		}
-
-		System.out.println("Edges in MST: ");
-		for (Edge e : MST) {
-			System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-					+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
-		}
-		MST.clear();
-		return result;
-	}
-	
 	public int kruskal() {
 		int groupCounter = 0;
 		ArrayList<Integer> groups = new ArrayList<Integer>();
@@ -280,12 +252,8 @@ public class Main {
 				visited.add(e.node1);
 				visited.add(e.node2);
 				result += e.w;
-//				System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-//						+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
 			}else if (n1 != null && n2 != null) {
 				if(n1.E != n2.E) {
-//					System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-//							+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
 					joinGroups(n2.E, n1.E, visited);
 					result += e.w;
 				}	
@@ -293,21 +261,12 @@ public class Main {
 				e.node1.E = n2.E;
 				visited.add(e.node1);
 				result += e.w;
-//				System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-//						+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
 			}else if(n2 == null) {
 				e.node2.E = n1.E;
 				visited.add(e.node2);
 				result += e.w;
-//				System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-//						+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
 			}
 		}
-//		System.out.println("\nAll edges:");
-//		for(Edge e : edges) {
-////			System.out.println("	Node1(x: " + e.node1.x + ", y: " + e.node1.y + ")" + " Node2(x: " + e.node2.x
-////					+ ", y: " + e.node2.y + ")" + " w: " + e.w + " E1: " + e.node1.E + " E2: " + e.node2.E);
-//		}
 		return result;
 	}
 	
